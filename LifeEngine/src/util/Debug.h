@@ -12,7 +12,7 @@ namespace LifeEngine {
 	x;\
 	ASSERT(GLLogCall())
 
-	static void GLClearError() {
+	static void GLClearError() { // TODO: Stack overflow error sometimes???
 		while (glGetError() != GL_NO_ERROR);
 	}
 

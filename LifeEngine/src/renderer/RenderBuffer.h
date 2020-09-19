@@ -1,12 +1,14 @@
 #pragma once
 
 #include <vector>
+#include <string>
 #include <GL/glew.h>
 
 #include "../util/Debug.h"
 #include "RenderBuffer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "../util/Shader.h"
 
 namespace LifeEngine {
 
@@ -17,6 +19,7 @@ namespace LifeEngine {
 	public:
 		RenderBuffer();
 		RenderBuffer(unsigned int vertexCount, float* vertices, unsigned int indiceCount, unsigned int* indices);
+		RenderBuffer(Shader& shader, unsigned int vertexCount, float* vertices, unsigned int indiceCount, unsigned int* indices);
 		~RenderBuffer();
 
 		void Draw();
@@ -34,6 +37,7 @@ namespace LifeEngine {
 		unsigned int VertexCount, IndiceCount;
 		float* Vertices = nullptr;
 		unsigned int* Indices;
+		Shader& BufferShader;
 	private:
 
 		void Init();
@@ -44,8 +48,8 @@ namespace LifeEngine {
 		IndexBuffer* indexBuffer = nullptr;
 	};
 
-	static void CreateSquare(float width, float height, RenderBuffer* output) {
-		float* ver = new float[8] {
+	static RenderBuffer* CreateSquare(float width, float height) {
+		float* ver = new float[8]{
 			width / 2, height / 2,
 			width / 2, -height / 2,
 			-width / 2, -height / 2,
@@ -55,7 +59,7 @@ namespace LifeEngine {
 			0, 1, 2,
 			2, 3, 0
 		};
-		(*output) = *(new RenderBuffer(8, ver, 6, ind));
+		return new RenderBuffer(8, ver, 6, ind);
 	}
 
 }
